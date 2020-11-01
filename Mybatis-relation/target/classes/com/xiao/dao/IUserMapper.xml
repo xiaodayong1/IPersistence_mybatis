@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--<mapper namespace="user"> 采用代理方式-->
+<mapper namespace="com.xiao.dao.IUserMapper">
+
+    <resultMap id="UserByOrder" type="com.xiao.pojo.User">
+        <result property="id" column="uid"></result>
+        <result property="username" column="username"></result>
+        <collection property="orderList" ofType="com.xiao.pojo.Order">
+            <result property="id" column="id"></result>
+            <result property="title" column="title"></result>
+            <result property="orderTime" column="order_time"></result>
+        </collection>
+    </resultMap>
+
+    <resultMap id="UserByRole" type="com.xiao.pojo.User">
+        <result property="id" column="uid"></result>
+        <result property="username" column="username"></result>
+        <collection property="roleList" ofType="com.xiao.pojo.Role">
+            <result property="id" column="id"></result>
+            <result property="roleName" column="role_name"></result>
+            <result property="roleDesc" column="role_desc"></result>
+        </collection>
+    </resultMap>
+
+    <select id="findUserByOrder" resultMap="UserByOrder">
+        select * from user u left join orders o on u.id = o.uid
+    </select>
+
+
+    <select id="findUserByRole" resultMap="UserByRole">
+        select * from user u left join sys_user_role ur on u.id = ur.uid
+                             inner join role r on ur.rid = r.id
+    </select>
+</mapper>
