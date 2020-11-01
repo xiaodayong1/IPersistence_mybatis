@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--<mapper namespace="user"> 采用代理方式-->
+<mapper namespace="com.xiao.dao.IOrderMapper">
+
+    <resultMap id="orderByUser" type="com.xiao.pojo.Order">
+        <result column="id" property="id"></result>
+        <result column="title" property="title"></result>
+        <result column="order_time" property="orderTime"></result>
+        <association property="user" javaType="com.xiao.pojo.User">
+            <result column="uid" property="id"></result>
+            <result column="username" property="username"></result>
+        </association>
+    </resultMap>
+
+    <select id="findOrderByUser" resultMap="orderByUser">
+        select * from orders o,user u where o.uid=u.id
+    </select>
+
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 引入数据库配置文件 ， mybatis的配置文件需要区分标签顺序，这个放在第一个 -->
+    <properties resource="jdbc.properties"></properties>
+
+    <typeAliases>
+        <!-- 为一个类起别名，再mapper里使用，不区分大小写 -->
+        <!-- <typeAlias type="com.xiao.pojo.User" alias="user"></typeAlias>-->
+        <!--为一个包下的所有类起别名，别名为类名，不区分大小写-->
+        <!--mybatis有基本类型的默认别名，祥见文档-->
+        <package name="com.xiao.pojo"/>
+    </typeAliases>
+
+    <!-- 运行环境 可配置多个环境 default为默认 -->
+    <environments default="dev">
+        <environment id="dev">
+            <!-- 配置事务管理器  配置jdbc管理事务 -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 配置数据源  type使用mybatis默认连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${userName}"/>
+                <property name="password" value="${passWord}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+<!--        <mapper resource="IOrderMapper.xml"></mapper>-->
+<!--        使用package配置xml文件，需要前缀名字相同，目录结构相同-->
+<!--        resources下建目录不能用.，应该用\分隔 ***-->
+        <package name="com.xiao.dao"/>
+    </mappers>
+</configuration>
