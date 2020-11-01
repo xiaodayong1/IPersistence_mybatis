@@ -23,23 +23,20 @@ public class IPersistenceTest {
         User user = new User();
         user.setId(1);
         user.setUsername("肖大勇");
-      /*  User user2 = sqlSession.selectOne("user.selectOne", user);
-
-        System.out.println(user2);*/
+        User user2 = sqlSession.selectOne("com.lagou.dao.IUserDao.findByCondition", user);
+        System.out.println(user2.toString());
+//
+//        System.out.println(user2);
 
        /* List<User> users = sqlSession.selectList("user.selectList");
         for (User user1 : users) {
             System.out.println(user1);
         }*/
 
-        IUserDao userDao = sqlSession.getMapper(IUserDao.class);
-
-        List<User> all = userDao.findAll();
-        for (User user1 : all) {
-            System.out.println(user1);
-        }
-
-
+//        IUserDao userDao = sqlSession.getMapper(IUserDao.class);
+//
+//        User byCondition = userDao.findByCondition(user);
+//        System.out.println(byCondition.toString());
     }
 
 

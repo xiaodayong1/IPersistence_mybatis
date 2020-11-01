@@ -55,10 +55,6 @@ public class XMLConfigBuilder {
             xmlMapperBuilder.parse(resourceAsSteam);
 
         }
-
-
-
-
         return configuration;
     }
 

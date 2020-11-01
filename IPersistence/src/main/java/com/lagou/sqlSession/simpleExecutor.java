@@ -1,6 +1,5 @@
 package com.lagou.sqlSession;
 
-
 import com.lagou.config.BoundSql;
 import com.lagou.pojo.Configuration;
 import com.lagou.pojo.MappedStatement;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class simpleExecutor implements  Executor {
-
 
     @Override                                                                                //user
     public <E> List<E> query(Configuration configuration, MappedStatement mappedStatement, Object... params) throws Exception {
@@ -49,12 +47,8 @@ public class simpleExecutor implements  Executor {
             //暴力访问
             declaredField.setAccessible(true);
             Object o = declaredField.get(params[0]);
-
             preparedStatement.setObject(i+1,o);
-
         }
-
-
         // 5. 执行sql
         ResultSet resultSet = preparedStatement.executeQuery();
         String resultType = mappedStatement.getResultType();
@@ -78,25 +72,18 @@ public class simpleExecutor implements  Executor {
                 PropertyDescriptor propertyDescriptor = new PropertyDescriptor(columnName, resultTypeClass);
                 Method writeMethod = propertyDescriptor.getWriteMethod();
                 writeMethod.invoke(o,value);
-
-
             }
             objects.add(o);
-
         }
             return (List<E>) objects;
-
     }
-
     private Class<?> getClassType(String paramterType) throws ClassNotFoundException {
         if(paramterType!=null){
             Class<?> aClass = Class.forName(paramterType);
             return aClass;
         }
          return null;
-
     }
-
 
     /**
      * 完成对#{}的解析工作：1.将#{}使用？进行代替，2.解析出#{}里面的值进行存储
@@ -114,7 +101,6 @@ public class simpleExecutor implements  Executor {
 
         BoundSql boundSql = new BoundSql(parseSql,parameterMappings);
          return boundSql;
-
     }
 
 

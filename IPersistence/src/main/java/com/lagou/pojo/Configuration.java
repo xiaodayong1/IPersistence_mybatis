@@ -7,7 +7,6 @@ import java.util.Map;
 public class Configuration {
 
     private DataSource dataSource;
-
     /*
     *   key: statementid  value:封装好的mappedStatement对象
      * */

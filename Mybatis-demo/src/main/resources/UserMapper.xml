@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--<mapper namespace="user"> 采用代理方式-->
+<mapper namespace="com.xiao.dao.IUserDao">
+
+<!--    sql片段抽取 ， 使用include标签接收-->
+    <sql id="selectUser">
+        select * from user
+    </sql>
+    
+    <select id="findAll" resultType="uSer">
+         <include refid="selectUser"></include>
+    </select>
+
+    <insert id="add" parameterType="user">
+        insert into user values(#{id},#{username})
+    </insert>
+
+    <update id="update" parameterType="user">
+        update user set username=#{username} where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from user where id=#{id}
+    </delete>
+
+<!--  多条件查询  测试if标签-->
+    <select id="findByCondition" parameterType="user" resultType="user">
+        select * from user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="username != null">
+                and username = #{username}
+            </if>
+        </where>
+    </select>
+
+    <select id="findByIds" parameterType="list" resultType="user">
+        select * from user
+        <where>
+--             1.当前传递的类型，是一个数组，用array，集合可以用list 4
+--             2. open 为参数开始的部分 where id in （id，id）
+--             3. close 为参数结束的部分
+--             4. separator为分隔符
+--             5. item遍历的值用id来接收
+            <foreach collection="array" open="id in (" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+</mapper>
